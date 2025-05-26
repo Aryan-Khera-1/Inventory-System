@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed3649571a249d145aa4def7a180b62e, type: 3}
   m_Name: ShopSO
   m_EditorClassIdentifier: 
-  items: []
+  items:
+  - itemSO: {fileID: 11400000, guid: 7c71d1dac4883534dad03ea9a75999bd, type: 2}
+    quantityAvailable: 50
+    price: 10
