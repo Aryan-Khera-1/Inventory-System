@@ -16,3 +16,12 @@ MonoBehaviour:
   - itemSO: {fileID: 11400000, guid: 7c71d1dac4883534dad03ea9a75999bd, type: 2}
     quantityAvailable: 50
     price: 10
+  - itemSO: {fileID: 11400000, guid: 63a972e13968b3b40847d5f2a2431283, type: 2}
+    quantityAvailable: 30
+    price: 8
+  - itemSO: {fileID: 11400000, guid: 7222c9d4e0b426244a59b036541453dc, type: 2}
+    quantityAvailable: 30
+    price: 5
+  - itemSO: {fileID: 11400000, guid: 9ac2ecc806c139e4689c1649185c8d53, type: 2}
+    quantityAvailable: 30
+    price: 10

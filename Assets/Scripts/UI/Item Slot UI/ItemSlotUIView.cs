@@ -12,4 +12,23 @@ public class ItemSlotUIView : MonoBehaviour
 
     public TextMeshProUGUI QuantityText => quantityText;
     public Button IconButton => iconButton;
+
+
+    public void SetItem(Sprite icon, int quantity)
+    {
+        var image = iconButton.image;
+
+        if (icon != null)
+        {
+            image.sprite = icon;
+            image.color = new Color(1, 1, 1, 1f);
+        }
+        //else
+        //{
+        //    image.sprite = null;
+        //    image.color = new Color(1, 1, 1, 0f);
+        //}
+
+        quantityText.text = $"x{quantity}";
+    }
 }
