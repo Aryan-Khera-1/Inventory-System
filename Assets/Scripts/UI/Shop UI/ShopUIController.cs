@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Game.UI;
 
 public class ShopUIController
 {
     private readonly ShopSO shopData;
     private readonly ShopUIView shopView;
 
-    public ShopUIController(ShopSO data, ShopUIView view)
+    public ShopUIController(GameplayService gameplayService, ShopUIView view)
     {
-        shopData = data;
+        shopData = gameplayService.ShopSO;
         shopView = view;
     }
 
