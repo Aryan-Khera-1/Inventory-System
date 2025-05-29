@@ -6089,7 +6089,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainView: {fileID: 1655782941}
   inventoryView: {fileID: 1846901594}
-  shopView: {fileID: 1144550080}
+  shopUIView: {fileID: 1144550080}
   descriptionView: {fileID: 252309633}
 --- !u!1 &1144550078
 GameObject:
