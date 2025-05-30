@@ -3,8 +3,9 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using Game.UI;
 
-public class ShopUIView : MonoBehaviour
+public class ShopUIView : MonoBehaviour, IUIView
 {
     [Header("UI References")]
     [SerializeField] private Transform itemSlotsContainer;
@@ -27,4 +28,7 @@ public class ShopUIView : MonoBehaviour
         }
         return itemSlotViews;
     }
+
+    public void EnableView() => gameObject.SetActive(true);
+    public void DisableView() => gameObject.SetActive(false);
 }

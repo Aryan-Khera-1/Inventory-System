@@ -23,12 +23,12 @@ public class ItemSlotUIView : MonoBehaviour
             image.sprite = icon;
             image.color = new Color(1, 1, 1, 1f);
         }
-        //else
-        //{
-        //    image.sprite = null;
-        //    image.color = new Color(1, 1, 1, 0f);
-        //}
+        else
+        {
+            image.sprite = null;
+            image.color = new Color(1, 1, 1, 0f);
+        }
 
-        quantityText.text = $"x{quantity}";
+        quantityText.text = quantity > 0 ? $"x{quantity}" : "";
     }
 }

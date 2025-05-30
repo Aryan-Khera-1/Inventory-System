@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.UI
 {
@@ -10,11 +11,11 @@ namespace Game.UI
         
         [Header("Main UI:")]
         private MainUIController mainController;
-        [SerializeField] private MainUIView mainView;
+        [SerializeField] private MainUIView mainUIView;
 
         [Header("Inventory UI:")]
         private InventoryUIController inventoryController;
-        [SerializeField] private InventoryUIView inventoryView;
+        [SerializeField] private InventoryUIView inventoryUIView;
 
         [Header("Shop UI:")]
         private ShopUIController shopController;
@@ -23,12 +24,11 @@ namespace Game.UI
 
         [Header("Description UI:")]
         private DescriptionUIController descriptionController;
-        [SerializeField] private DescriptionUIView descriptionView;
+        [SerializeField] private DescriptionUIView descriptionUIView;
         
         private void Start()
         {
             //mainController = new MainUIController(mainView);
-            //inventoryController = new InventoryUIController(inventoryView, itemSlotPrefab);
             
             //descriptionController = new DescriptionUIController(descriptionView);
         }
@@ -37,9 +37,35 @@ namespace Game.UI
         {
             this.eventService = eventService;
             this.gameplayService = gameplayService;
+            
+            mainController = new MainUIController(mainUIView, eventService);
 
-            shopController = new ShopUIController(gameplayService, shopUIView);
+            shopController = new ShopUIController(shopUIView, gameplayService, eventService);
             shopController.InitializeShop();
+            
+            inventoryController = new InventoryUIController(inventoryUIView, gameplayService, eventService);;
+
+            
+            SubscribeToEvents();
         }
+        
+        private void SubscribeToEvents()
+        {
+            eventService.OnInventoryButtonClicked.AddListener(ShowInventoryUI);
+            eventService.OnShopButtonClicked.AddListener(ShowShopUI);
+        }
+        
+        private void ShowInventoryUI()
+        {
+            inventoryController.Show();
+            shopController.Hide();
+        }
+
+        private void ShowShopUI()
+        {
+            shopController.Show();
+            inventoryController.Hide();
+        }
+
     }
 }

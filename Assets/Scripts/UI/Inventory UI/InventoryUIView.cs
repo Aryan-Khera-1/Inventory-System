@@ -14,4 +14,7 @@ public class InventoryUIView : MonoBehaviour
     public Button SellButton => sellButton;
     public Button GetItemsButton => getItemsButton;
     public Dropdown CategoriesDropdown => categoriesDropdown;
+    
+    public void EnableView() => gameObject.SetActive(true);
+    public void DisableView() => gameObject.SetActive(false);
 }

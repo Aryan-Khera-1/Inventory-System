@@ -3,17 +3,17 @@ using Game.UI;
 public class ShopUIController
 {
     private readonly ShopSO shopData;
-    private readonly ShopUIView shopView;
+    private readonly ShopUIView shopUIView;
 
-    public ShopUIController(GameplayService gameplayService, ShopUIView view)
+    public ShopUIController(ShopUIView shopUIView, GameplayService gameplayService, EventService eventService)
     {
         shopData = gameplayService.ShopSO;
-        shopView = view;
+        this.shopUIView = shopUIView;
     }
 
     public void InitializeShop()
     {
-        var itemSlots = shopView.GetItemSlots();
+        var itemSlots = shopUIView.GetItemSlots();
         for (int i = 0; i < itemSlots.Count; i++)
         {
             if (i < shopData.items.Count)
@@ -28,4 +28,7 @@ public class ShopUIController
             }
         }
     }
+    
+    public void Show() => shopUIView.EnableView();
+    public void Hide() => shopUIView.DisableView();
 }
