@@ -1,30 +1,45 @@
+using System.Collections.Generic;
 using Game.UI;
 
 public class ShopUIController
 {
     private readonly ShopSO shopData;
     private readonly ShopUIView shopUIView;
+    private readonly EventService eventService;
+    private readonly List<ItemSlotUIController> itemSlotControllers;
 
     public ShopUIController(ShopUIView shopUIView, GameplayService gameplayService, EventService eventService)
     {
         shopData = gameplayService.ShopSO;
         this.shopUIView = shopUIView;
+        this.eventService = eventService;
+        
+        itemSlotControllers = new List<ItemSlotUIController>();
+        InitializeItemSlotControllers();
+    }
+
+    private void InitializeItemSlotControllers()
+    {
+        var itemSlotUIViews = shopUIView.GetItemSlots();
+        foreach (var view in itemSlotUIViews)
+        {
+            var controller = new ItemSlotUIController(view, eventService);
+            itemSlotControllers.Add(controller);
+        }
     }
 
     public void InitializeShop()
     {
-        var itemSlots = shopUIView.GetItemSlots();
-        for (int i = 0; i < itemSlots.Count; i++)
+        for (int i = 0; i < itemSlotControllers.Count; i++)
         {
             if (i < shopData.items.Count)
             {
                 var data = shopData.items[i];
-                var slot = itemSlots[i];
-                slot.SetItem(data.itemSO.icon, data.quantityAvailable);
+                itemSlotControllers[i].SetItem(data.quantityAvailable, data.itemSO);
             }
             else
             {
-                itemSlots[i].SetItem(null, 0);
+                itemSlotControllers[i].SetItem(0);
             }
         }
     }

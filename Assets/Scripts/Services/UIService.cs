@@ -25,13 +25,6 @@ namespace Game.UI
         [Header("Description UI:")]
         private DescriptionUIController descriptionController;
         [SerializeField] private DescriptionUIView descriptionUIView;
-        
-        private void Start()
-        {
-            //mainController = new MainUIController(mainView);
-            
-            //descriptionController = new DescriptionUIController(descriptionView);
-        }
 
         public void Initialize(EventService eventService, GameplayService gameplayService)
         {
@@ -39,13 +32,11 @@ namespace Game.UI
             this.gameplayService = gameplayService;
             
             mainController = new MainUIController(mainUIView, eventService);
-
             shopController = new ShopUIController(shopUIView, gameplayService, eventService);
-            shopController.InitializeShop();
-            
             inventoryController = new InventoryUIController(inventoryUIView, gameplayService, eventService);;
+            descriptionController = new DescriptionUIController(descriptionUIView);
 
-            
+            shopController.InitializeShop();
             SubscribeToEvents();
         }
         
@@ -53,6 +44,7 @@ namespace Game.UI
         {
             eventService.OnInventoryButtonClicked.AddListener(ShowInventoryUI);
             eventService.OnShopButtonClicked.AddListener(ShowShopUI);
+            eventService.OnItemClicked.AddListener(OnItemClicked);
         }
         
         private void ShowInventoryUI()
@@ -66,6 +58,11 @@ namespace Game.UI
             shopController.Show();
             inventoryController.Hide();
         }
-
+        
+        private void OnItemClicked(ItemSO item, int quantityAvailable)
+        {
+            descriptionController.SetItemData(item, quantityAvailable);
+            descriptionController.Show();
+        }
     }
 }

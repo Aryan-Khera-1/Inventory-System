@@ -1,18 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DescriptionUIController : MonoBehaviour
+namespace Game.UI
 {
-    // Start is called before the first frame update
-    void Start()
+    public class DescriptionUIController
     {
+        private DescriptionUIView descriptionUIView;
+        private ItemSO currentItem;
+        private int quantityAvailable;
         
-    }
+        public DescriptionUIController(DescriptionUIView descriptionUIView)
+        {
+            this.descriptionUIView = descriptionUIView;
+            descriptionUIView.QuantitySlider.onValueChanged.AddListener(OnQuantitySliderChanged);
+        }
+        
+        private void OnQuantitySliderChanged(float newValue)
+        {
+            int quantity = Mathf.RoundToInt(newValue);
+            descriptionUIView.QuantityValueToSet.text = quantity.ToString();
 
-    // Update is called once per frame
-    void Update()
-    {
+            UpdateCostAndWeight(quantity);
+        }
         
+        private void UpdateCostAndWeight(int quantity)
+        {
+            if (currentItem == null) return;
+
+            int totalCost = currentItem.cost * quantity;
+            int totalWeight = currentItem.weight * quantity;
+
+            descriptionUIView.CurrencyRequired.text = totalCost.ToString();
+            descriptionUIView.WeightRequired.text = totalWeight.ToString();
+        }
+        
+        public void SetItemData(ItemSO item, int quantityAvailable)
+        {
+            currentItem = item;
+            this.quantityAvailable = quantityAvailable;
+            
+            descriptionUIView.ItemName.text = item.itemName;
+            descriptionUIView.DescriptionText.text = item.description;
+            descriptionUIView.ItemIcon.sprite = item.icon;
+
+            descriptionUIView.QuantitySlider.minValue = 1;
+            descriptionUIView.QuantitySlider.maxValue = quantityAvailable;
+            descriptionUIView.QuantitySlider.value = 1;
+
+            UpdateCostAndWeight(1);
+        }
+
+        public void Show() => descriptionUIView.EnableView();
+        public void Hide() => descriptionUIView.DisableView();
     }
 }

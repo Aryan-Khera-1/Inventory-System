@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.UI;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 
-public class ItemSlotUIView : MonoBehaviour
+public class ItemSlotUIView : MonoBehaviour, IUIView
 {
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI quantityText;
@@ -31,4 +32,6 @@ public class ItemSlotUIView : MonoBehaviour
 
         quantityText.text = quantity > 0 ? $"x{quantity}" : "";
     }
+    public void EnableView() => gameObject.SetActive(true);
+    public void DisableView() => gameObject.SetActive(false);
 }
