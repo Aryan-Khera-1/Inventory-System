@@ -15,4 +15,5 @@ MonoBehaviour:
   itemName: Hot Wings
   icon: {fileID: 21300000, guid: 43c7cd3796487a540973573009a6817f, type: 3}
   description: Chicken Wings
+  cost: 10
   weight: 2

@@ -23,5 +23,5 @@ MonoBehaviour:
     quantityAvailable: 30
     price: 5
   - itemSO: {fileID: 11400000, guid: 9ac2ecc806c139e4689c1649185c8d53, type: 2}
-    quantityAvailable: 30
+    quantityAvailable: 10
     price: 10
