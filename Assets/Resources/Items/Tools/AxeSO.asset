@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7da1d76bfad31cf49a8dfe5633445dbf, type: 3}
-  m_Name: RockSO
+  m_Name: AxeSO
   m_EditorClassIdentifier: 
-  itemName: Rock
-  icon: {fileID: 21300000, guid: 99bbc83bebbd36849b732a06e55ad60e, type: 3}
-  description: Rock description...
-  cost: 5
+  itemName: Axe
+  icon: {fileID: 21300000, guid: 8708d80070522a043a1ab6a2b2775382, type: 3}
+  description: Axe..
+  cost: 3
   weight: 5
-  category: 1
+  category: 3

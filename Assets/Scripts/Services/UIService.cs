@@ -1,3 +1,4 @@
+using Resources.Items;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -36,6 +37,8 @@ namespace Game.UI
             inventoryController = new InventoryUIController(inventoryUIView, gameplayService, eventService);;
             descriptionController = new DescriptionUIController(descriptionUIView);
 
+            shopSO = gameplayService.ShopSO;
+            
             shopController.InitializeShop();
             SubscribeToEvents();
         }
@@ -45,8 +48,10 @@ namespace Game.UI
             eventService.OnInventoryButtonClicked.AddListener(ShowInventoryUI);
             eventService.OnShopButtonClicked.AddListener(ShowShopUI);
             eventService.OnItemClicked.AddListener(OnItemClicked);
+            eventService.OnCategoryChanged.AddListener(OnCategoryChanged);
         }
-        
+
+
         private void ShowInventoryUI()
         {
             inventoryController.Show();
@@ -64,5 +69,20 @@ namespace Game.UI
             descriptionController.SetItemData(item, quantityAvailable);
             descriptionController.Show();
         }
+        
+        public void OnCategoryChanged(ItemCategory category)
+        {
+            if (shopUIView.gameObject.activeSelf)
+            {
+                var items = shopSO.GetItemsByCategory(category);
+                shopController.SetItems(items);
+            }
+            else if (inventoryUIView.gameObject.activeSelf)
+            {
+                /*var items = inventorySO.GetItemsByCategory(category);
+                inventoryController.SetItems(items);*/
+            }
+        }
+
     }
 }

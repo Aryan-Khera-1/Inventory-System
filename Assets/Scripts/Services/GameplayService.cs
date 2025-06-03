@@ -1,5 +1,5 @@
 using UnityEngine;
-
+ 
 namespace Game.UI
 {
     public class GameplayService
@@ -14,8 +14,8 @@ namespace Game.UI
 
         public void Initialize()
         {
-            ShopSO = Resources.Load<ShopSO>("Shop/ShopSO");
-            InventorySO = Resources.Load<InventorySO>("Inventory/InventorySO");
+            ShopSO = UnityEngine.Resources.Load<ShopSO>("Shop/ShopSO");
+            InventorySO = UnityEngine.Resources.Load<InventorySO>("Inventory/InventorySO");
 
             if (ShopSO == null)
                 Debug.LogError("ShopSO not found in Shop/ShopSO");

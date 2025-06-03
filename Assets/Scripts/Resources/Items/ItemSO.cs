@@ -1,3 +1,4 @@
+using Resources.Items;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Items/Item")]
@@ -8,4 +9,5 @@ public class ItemSO : ScriptableObject
     public string description;
     public int cost;
     public int weight;
+    public ItemCategory category;
 }

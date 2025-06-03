@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Resources.Items;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Data/Shop")]

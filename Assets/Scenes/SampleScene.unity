@@ -4419,7 +4419,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: All
+  m_Text: Raw Materials
 --- !u!222 &760502568
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9855,7 +9855,9 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Weapons
       m_Image: {fileID: 0}
-    - m_Text: Travel
+    - m_Text: Tools
+      m_Image: {fileID: 0}
+    - m_Text: Raw Materials
       m_Image: {fileID: 0}
     - m_Text: All
       m_Image: {fileID: 0}
