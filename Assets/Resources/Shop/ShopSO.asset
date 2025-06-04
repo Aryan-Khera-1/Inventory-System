@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - itemSO: {fileID: 11400000, guid: 7c71d1dac4883534dad03ea9a75999bd, type: 2}
-    quantityAvailable: 50
+    quantity: 10
   - itemSO: {fileID: 11400000, guid: 63a972e13968b3b40847d5f2a2431283, type: 2}
-    quantityAvailable: 30
+    quantity: 25
   - itemSO: {fileID: 11400000, guid: 7222c9d4e0b426244a59b036541453dc, type: 2}
-    quantityAvailable: 30
+    quantity: 20
   - itemSO: {fileID: 11400000, guid: 9ac2ecc806c139e4689c1649185c8d53, type: 2}
-    quantityAvailable: 10
+    quantity: 20
   - itemSO: {fileID: 11400000, guid: 8b0530f116e30434991e7b3696a59636, type: 2}
-    quantityAvailable: 7
+    quantity: 10
   - itemSO: {fileID: 11400000, guid: d1ac9105554b65b4194118ad8d821bbd, type: 2}
-    quantityAvailable: 7
+    quantity: 15
   - itemSO: {fileID: 11400000, guid: 0919ba6018df6474eb0f6bef10b31e33, type: 2}
-    quantityAvailable: 7
+    quantity: 10
   - itemSO: {fileID: 11400000, guid: 176a80a7e2a5a034b8ce887f6f7079ad, type: 2}
-    quantityAvailable: 7
+    quantity: 5

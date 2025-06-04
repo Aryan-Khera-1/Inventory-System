@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: InventorySO
   m_EditorClassIdentifier: 
   items:
-  - itemSO: {fileID: 0}
-    quantity: 0
+  - itemSO: {fileID: 11400000, guid: 7c71d1dac4883534dad03ea9a75999bd, type: 2}
+    quantity: 4
