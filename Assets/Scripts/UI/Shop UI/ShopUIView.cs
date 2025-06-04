@@ -28,12 +28,6 @@ public class ShopUIView : MonoBehaviour, IUIView
         categoriesDropdown.RefreshShownValue(); ;
         categoriesDropdown.onValueChanged.AddListener(controller.OnCategoryDropdownValueChanged);
     }
-    
-    /*private void OnCategoryDropdownValueChanged(int selectedIndex)
-    {
-        ItemCategory selectedCategory = (ItemCategory)selectedIndex;
-        eventService.OnCategoryChanged.InvokeEvent(selectedCategory);
-    }*/
 
     public List<ItemSlotUIView> GetItemSlots()
     {
