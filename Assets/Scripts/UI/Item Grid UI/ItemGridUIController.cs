@@ -2,28 +2,26 @@ using System.Collections.Generic;
 using Game.UI;
 using Resources.Items;
 
-public class ShopUIController
+public class ItemGridUIController
 {
-    private readonly ShopSO shopData;
-    private readonly ShopUIView shopUIView;
+    private GridItemSO currentItemData;
+    private readonly ItemGridUIView itemGridUIView;
     private readonly EventService eventService;
     private readonly List<ItemSlotUIController> itemSlotControllers;
     
-    public ShopUIController(ShopUIView shopUIView, GameplayService gameplayService, EventService eventService)
+    public ItemGridUIController(ItemGridUIView itemGridUIView, GameplayService gameplayService, EventService eventService)
     {
-        shopData = gameplayService.ShopSO;
-        this.shopUIView = shopUIView;
+        this.itemGridUIView = itemGridUIView;
         this.eventService = eventService;
         
-        shopUIView.Initialize(this, eventService);
-        
+        itemGridUIView.Initialize(this, eventService);
         itemSlotControllers = new List<ItemSlotUIController>();
         InitializeItemSlotControllers();
     }
 
     private void InitializeItemSlotControllers()
     {
-        var itemSlotUIViews = shopUIView.GetItemSlots();
+        var itemSlotUIViews = itemGridUIView.GetItemSlots();
         foreach (var view in itemSlotUIViews)
         {
             var controller = new ItemSlotUIController(view, eventService);
@@ -31,18 +29,18 @@ public class ShopUIController
         }
     }
 
-    public void InitializeShop()
+    public void SetData(GridItemSO gridData)
     {
-        SetItems(shopData.items);
+        currentItemData = gridData;
+        SetItems(gridData.items);
     }
 
     public void OnCategoryDropdownValueChanged(int selectedIndex)
     {
         var selectedCategory = (ItemCategory)selectedIndex;
+        var filteredItems = new List<GridItemData>();
 
-        var filteredItems = new List<ShopItemData>();
-
-        foreach (var itemData in shopData.items)
+        foreach (var itemData in currentItemData.items)
         {
             if (selectedCategory == ItemCategory.All || itemData.itemSO.category == selectedCategory)
             {
@@ -53,14 +51,14 @@ public class ShopUIController
         SetItems(filteredItems);
     }
 
-    public void SetItems(List<ShopItemData> items)
+    public void SetItems(List<GridItemData> items)
     {
         for (int i = 0; i < itemSlotControllers.Count; i++)
         {
             if (i < items.Count)
             {
                 var data = items[i];
-                itemSlotControllers[i].SetItem(data.quantityAvailable, data.itemSO);
+                itemSlotControllers[i].SetItem(data.quantity, data.itemSO);
             }
             else
             {
@@ -69,7 +67,6 @@ public class ShopUIController
         }
     }
     
-    public void Show() => shopUIView.EnableView();
-    public void Hide() => shopUIView.DisableView();
-
+    public void Show() => itemGridUIView.EnableView();
+    public void Hide() => itemGridUIView.DisableView();
 }

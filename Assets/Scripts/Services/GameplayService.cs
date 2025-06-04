@@ -4,8 +4,8 @@ namespace Game.UI
 {
     public class GameplayService
     {
-        public ShopSO ShopSO { get; private set; }
-        public InventorySO InventorySO { get; private set; }
+        public GridItemSO ShopSo { get; private set; }
+        public GridItemSO InventorySo { get; private set; }
         
         public GameplayService()
         {
@@ -14,12 +14,12 @@ namespace Game.UI
 
         public void Initialize()
         {
-            ShopSO = UnityEngine.Resources.Load<ShopSO>("Shop/ShopSO");
-            InventorySO = UnityEngine.Resources.Load<InventorySO>("Inventory/InventorySO");
+            ShopSo = UnityEngine.Resources.Load<GridItemSO>("Shop/ShopSO");
+            InventorySo = UnityEngine.Resources.Load<GridItemSO>("Inventory/InventorySO");
 
-            if (ShopSO == null)
+            if (ShopSo == null)
                 Debug.LogError("ShopSO not found in Shop/ShopSO");
-            if (InventorySO == null)
+            if (InventorySo == null)
                 Debug.LogError("InventorySO not found in Inventory/InventorySO");
         }
     }

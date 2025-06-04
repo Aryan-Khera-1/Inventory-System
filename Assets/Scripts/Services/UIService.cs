@@ -14,14 +14,9 @@ namespace Game.UI
         private MainUIController mainController;
         [SerializeField] private MainUIView mainUIView;
 
-        [Header("Inventory UI:")]
-        private InventoryUIController inventoryController;
-        [SerializeField] private InventoryUIView inventoryUIView;
-
-        [Header("Shop UI:")]
-        private ShopUIController shopController;
-        private ShopSO shopSO;
-        [SerializeField] private ShopUIView shopUIView;
+        [Header("Item Grid UI:")]
+        private ItemGridUIController itemGridUIController;
+        [SerializeField] private ItemGridUIView itemGridUIView;
 
         [Header("Description UI:")]
         private DescriptionUIController descriptionController;
@@ -32,35 +27,25 @@ namespace Game.UI
             this.eventService = eventService;
             this.gameplayService = gameplayService;
             
-            mainController = new MainUIController(mainUIView, eventService);
-            shopController = new ShopUIController(shopUIView, gameplayService, eventService);
-            inventoryController = new InventoryUIController(inventoryUIView, gameplayService, eventService);;
+            mainController = new MainUIController(mainUIView, eventService, gameplayService);
+            itemGridUIController = new ItemGridUIController(itemGridUIView, gameplayService, eventService);
             descriptionController = new DescriptionUIController(descriptionUIView);
-
-            shopSO = gameplayService.ShopSO;
             
-            shopController.InitializeShop();
             SubscribeToEvents();
         }
         
         private void SubscribeToEvents()
         {
-            eventService.OnInventoryButtonClicked.AddListener(ShowInventoryUI);
-            eventService.OnShopButtonClicked.AddListener(ShowShopUI);
+            eventService.OnShopButtonClicked.AddListener(ShowItemGridUI);
+            eventService.OnInventoryButtonClicked.AddListener(ShowItemGridUI);
             eventService.OnItemClicked.AddListener(OnItemClicked);
         }
 
-
-        private void ShowInventoryUI()
+        private void ShowItemGridUI(GridItemSO itemData, string title)
         {
-            inventoryController.Show();
-            shopController.Hide();
-        }
-
-        private void ShowShopUI()
-        {
-            shopController.Show();
-            inventoryController.Hide();
+            itemGridUIController.SetData(itemData);
+            itemGridUIView.SetTitle(title);
+            itemGridUIController.Show();
         }
         
         private void OnItemClicked(ItemSO item, int quantityAvailable)
@@ -68,6 +53,5 @@ namespace Game.UI
             descriptionController.SetItemData(item, quantityAvailable);
             descriptionController.Show();
         }
-
     }
 }
