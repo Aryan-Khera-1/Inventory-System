@@ -17,4 +17,4 @@ MonoBehaviour:
   description: Rock description...
   cost: 5
   weight: 5
-  category: 1
+  category: 2

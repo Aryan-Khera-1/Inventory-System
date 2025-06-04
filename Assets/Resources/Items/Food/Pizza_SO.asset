@@ -17,3 +17,4 @@ MonoBehaviour:
   description: Margerita Pizza
   cost: 8
   weight: 2
+  category: 1

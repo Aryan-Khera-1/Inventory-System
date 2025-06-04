@@ -1,10 +1,15 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Game.UI;
+using Resources.Items;
 
 public class ShopUIView : MonoBehaviour, IUIView
 {
+    private ShopUIController shopUIController;
+    private EventService eventService;
+    
     [Header("UI References")]
     [SerializeField] private Transform itemSlotsContainer;
     [SerializeField] private Button buyButton;
@@ -14,6 +19,21 @@ public class ShopUIView : MonoBehaviour, IUIView
     public Button BuyButton => buyButton;
     public Dropdown CategoriesDropdown => categoriesDropdown;
 
+    public void Initialize(ShopUIController controller, EventService eventService)
+    {
+        shopUIController = controller;
+        this.eventService = eventService;
+        
+        categoriesDropdown.value = 0;
+        categoriesDropdown.RefreshShownValue(); ;
+        categoriesDropdown.onValueChanged.AddListener(controller.OnCategoryDropdownValueChanged);
+    }
+    
+    /*private void OnCategoryDropdownValueChanged(int selectedIndex)
+    {
+        ItemCategory selectedCategory = (ItemCategory)selectedIndex;
+        eventService.OnCategoryChanged.InvokeEvent(selectedCategory);
+    }*/
 
     public List<ItemSlotUIView> GetItemSlots()
     {

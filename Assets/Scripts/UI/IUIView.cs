@@ -4,5 +4,6 @@ namespace Game.UI
     {
         void EnableView();
         void DisableView();
+        
     }
 }

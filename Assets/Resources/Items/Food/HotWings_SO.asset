@@ -17,3 +17,4 @@ MonoBehaviour:
   description: Chicken Wings
   cost: 10
   weight: 2
+  category: 1

@@ -3,11 +3,11 @@ namespace Resources.Items
 {
     public enum ItemCategory
     {
+        All,
         Food,
-        RawMaterial,
-        Weapon,
-        Tool,
-        All
+        RawMaterials,
+        Weapons,
+        Tools
     }    
 }
 

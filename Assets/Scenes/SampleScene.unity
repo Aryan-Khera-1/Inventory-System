@@ -4419,7 +4419,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Raw Materials
+  m_Text: Weapons
 --- !u!222 &760502568
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9851,15 +9851,15 @@ MonoBehaviour:
   m_Value: 3
   m_Options:
     m_Options:
+    - m_Text: All
+      m_Image: {fileID: 0}
     - m_Text: Food
+      m_Image: {fileID: 0}
+    - m_Text: Raw Materials
       m_Image: {fileID: 0}
     - m_Text: Weapons
       m_Image: {fileID: 0}
     - m_Text: Tools
-      m_Image: {fileID: 0}
-    - m_Text: Raw Materials
-      m_Image: {fileID: 0}
-    - m_Text: All
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
