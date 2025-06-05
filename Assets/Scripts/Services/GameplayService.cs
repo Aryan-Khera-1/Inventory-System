@@ -13,6 +13,19 @@ namespace Game.UI
         public RuntimeGridData ShopData { get; private set; }
         public RuntimeGridData InventoryData { get; private set; }
         
+        public int CurrentCurrency { get; set; } = 1000;
+        public int MaxInventoryWeight { get; private set; } = 500;
+
+        public int GetCurrentInventoryWeight()
+        {
+            int totalWeight = 0;
+            foreach (var item in InventoryData.items)
+            {
+                totalWeight += item.itemSO.weight * item.quantity;
+            }
+            return totalWeight;
+        }
+
         public GameplayService()
         {
             Initialize();

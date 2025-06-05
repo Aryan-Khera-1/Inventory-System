@@ -62,6 +62,7 @@ namespace Game.UI
 
         private void ShowItemGridUI(RuntimeGridData itemData, string title)
         {
+            descriptionController.Hide();
             itemGridUIController.SetData(itemData);
             itemGridUIView.SetTitle(title);
             itemGridUIView.SetupButtons(title);

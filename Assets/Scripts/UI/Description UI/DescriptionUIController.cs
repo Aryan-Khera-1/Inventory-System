@@ -6,7 +6,11 @@ namespace Game.UI
     {
         private DescriptionUIView descriptionUIView;
         private ItemSO currentItem;
-        private int quantityAvailable;
+        private int selectedQuantity = 1;
+        public int SelectedQuantity => selectedQuantity;
+        
+        public ItemSO CurrentItem => currentItem;
+        
         
         public DescriptionUIController(DescriptionUIView descriptionUIView)
         {
@@ -16,10 +20,10 @@ namespace Game.UI
         
         private void OnQuantitySliderChanged(float newValue)
         {
-            int quantity = Mathf.RoundToInt(newValue);
-            descriptionUIView.QuantityValueToSet.text = quantity.ToString();
+            selectedQuantity = Mathf.RoundToInt(newValue);
+            descriptionUIView.QuantityValueToSet.text = selectedQuantity.ToString();
 
-            UpdateCostAndWeight(quantity);
+            UpdateCostAndWeight(selectedQuantity);
         }
         
         private void UpdateCostAndWeight(int quantity)
@@ -36,7 +40,6 @@ namespace Game.UI
         public void SetItemData(ItemSO item, int quantityAvailable)
         {
             currentItem = item;
-            this.quantityAvailable = quantityAvailable;
             
             descriptionUIView.ItemName.text = item.itemName;
             descriptionUIView.DescriptionText.text = item.description;

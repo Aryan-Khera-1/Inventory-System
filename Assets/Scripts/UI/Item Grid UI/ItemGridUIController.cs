@@ -56,18 +56,6 @@ public class ItemGridUIController
         ResetItems(filteredItems);
     }
 
-    private void RefreshCurrentView()
-    {
-        ResetItems(currentItemData.items);
-    }
-
-    private void RefreshFilteredView()
-    {
-        var selectedCategoryIndex = itemGridUIView.CategoriesDropdown.value;
-        OnCategoryDropdownValueChanged(selectedCategoryIndex);
-    }
-
-
     public void ResetItems(List<RuntimeItemData> items)
     {
         for (int i = 0; i < itemSlotControllers.Count; i++)
@@ -95,7 +83,7 @@ public class ItemGridUIController
             return;
         }
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 1; i <= 3; i++)
         {
             var shopItem = GetRandomAvailableItem(shopItems);
             if (shopItem == null)
@@ -169,11 +157,7 @@ public class ItemGridUIController
             }
         }
     }
-
-    
-    
     
     public void Show() => itemGridUIView.EnableView();
     public void Hide() => itemGridUIView.DisableView();
-
 }
