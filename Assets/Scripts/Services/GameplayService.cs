@@ -4,8 +4,8 @@ namespace Game.UI
 {
     public class GameplayService
     {
-        public GridItemSO ShopSo { get; private set; }
-        public GridItemSO InventorySo { get; private set; }
+        public GridItemSO ShopSo { get; set; }
+        public GridItemSO InventorySo { get; set; }
         
         public GameplayService()
         {

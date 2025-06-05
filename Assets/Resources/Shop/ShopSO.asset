@@ -24,8 +24,8 @@ MonoBehaviour:
   - itemSO: {fileID: 11400000, guid: 8b0530f116e30434991e7b3696a59636, type: 2}
     quantity: 10
   - itemSO: {fileID: 11400000, guid: d1ac9105554b65b4194118ad8d821bbd, type: 2}
-    quantity: 15
-  - itemSO: {fileID: 11400000, guid: 0919ba6018df6474eb0f6bef10b31e33, type: 2}
-    quantity: 10
-  - itemSO: {fileID: 11400000, guid: 176a80a7e2a5a034b8ce887f6f7079ad, type: 2}
     quantity: 5
+  - itemSO: {fileID: 11400000, guid: 0919ba6018df6474eb0f6bef10b31e33, type: 2}
+    quantity: 2
+  - itemSO: {fileID: 11400000, guid: 176a80a7e2a5a034b8ce887f6f7079ad, type: 2}
+    quantity: 3
