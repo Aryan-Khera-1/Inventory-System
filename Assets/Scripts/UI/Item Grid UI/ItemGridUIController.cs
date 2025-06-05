@@ -55,36 +55,6 @@ public class ItemGridUIController
 
         ResetItems(filteredItems);
     }
-    
-    public void AddItem(RuntimeItemData newItem)
-    {
-        var existingItem = currentItemData.items.Find(x => x.itemSO == newItem.itemSO);
-        if (existingItem != null)
-        {
-            existingItem.quantity += newItem.quantity;
-        }
-        else
-        {
-            currentItemData.items.Add(newItem);
-        }
-
-        RefreshCurrentView();
-    }
-
-    public void RemoveItem(GridItemData itemToRemove)
-    {
-        var existingItem = currentItemData.items.Find(x => x.itemSO == itemToRemove.itemSO);
-        if (existingItem != null)
-        {
-            existingItem.quantity -= itemToRemove.quantity;
-            if (existingItem.quantity <= 0)
-            {
-                currentItemData.items.Remove(existingItem);
-            }
-        }
-
-        RefreshCurrentView();
-    }
 
     private void RefreshCurrentView()
     {
@@ -125,39 +95,83 @@ public class ItemGridUIController
             return;
         }
 
-        var random = new System.Random();
-
         for (int i = 0; i < 3; i++)
         {
-            // Pick random item
-            var randomIndex = UnityEngine.Random.Range(0, shopItems.Count);
-            var shopItem = shopItems[randomIndex];
-
-            // If item has no stock, skip
-            if (shopItem.quantity <= 0)
+            var shopItem = GetRandomAvailableItem(shopItems);
+            if (shopItem == null)
             {
                 i--;
                 continue;
             }
 
-            // Random quantity (between 1 and shop stock)
-            var quantity = random.Next(1, shopItem.quantity + 1);
+            var quantity = GetRandomQuantity(shopItem.quantity);
 
-            // Deduct from shop
-            shopItem.quantity -= quantity;
-
-           AddItem(shopItem);
-                /*inventoryItems.Add(new RuntimeItemData()
-                {
-                    itemSO = shopItem.itemSO,
-                    quantity = quantity
-                });*/
+            RemoveItem(shopItems, shopItem.itemSO, quantity);
+            AddItem(inventoryItems, shopItem.itemSO, quantity);
         }
 
-        // Refresh the inventory view
         SetData(gameplayService.InventoryData);
         Debug.Log("3 random items picked from shop and added to inventory.");
     }
+    
+    public void OnBuyButtonClicked()
+    {
+        throw new System.NotImplementedException();
+    }
+    
+    public void OnSellButtonClicked()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private RuntimeItemData GetRandomAvailableItem(List<RuntimeItemData> items)
+    {
+        var availableItems = items.FindAll(x => x.quantity > 0);
+        if (availableItems.Count == 0)
+            return null;
+
+        var randomIndex = UnityEngine.Random.Range(0, availableItems.Count);
+        return availableItems[randomIndex];
+    }
+
+    private int GetRandomQuantity(int max)
+    {
+        var random = new System.Random();
+        return random.Next(1, max + 1);
+    }
+
+    private void AddItem(List<RuntimeItemData> targetList, ItemSO itemSO, int quantity)
+    {
+        var existingItem = targetList.Find(x => x.itemSO == itemSO);
+        if (existingItem != null)
+        {
+            existingItem.quantity += quantity;
+        }
+        else
+        {
+            targetList.Add(new RuntimeItemData
+            {
+                itemSO = itemSO,
+                quantity = quantity
+            });
+        }
+    }
+
+    private void RemoveItem(List<RuntimeItemData> sourceList, ItemSO itemSO, int quantity)
+    {
+        var existingItem = sourceList.Find(x => x.itemSO == itemSO);
+        if (existingItem != null)
+        {
+            existingItem.quantity -= quantity;
+            if (existingItem.quantity <= 0)
+            {
+                sourceList.Remove(existingItem);
+            }
+        }
+    }
+
+    
+    
     
     public void Show() => itemGridUIView.EnableView();
     public void Hide() => itemGridUIView.DisableView();

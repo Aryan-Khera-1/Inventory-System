@@ -40,7 +40,19 @@ namespace Game.UI
             eventService.OnShopButtonClicked.AddListener(ShowItemGridUI);
             eventService.OnInventoryButtonClicked.AddListener(ShowItemGridUI);
             eventService.OnItemClicked.AddListener(OnItemClicked);
-            eventService.OnGetItemsButtonClicked.AddListener(OnGetItemsClicked);
+            eventService.OnGetItemsButtonClicked.AddListener(OnGetItemsClicked); 
+            eventService.OnBuyButtonClicked.AddListener(OnBuyButtonClicked);
+            eventService.OnSellButtonClicked.AddListener(OnSellButtonClicked);
+        }
+
+        private void OnSellButtonClicked()
+        {
+            itemGridUIController.OnSellButtonClicked();
+        }
+
+        private void OnBuyButtonClicked()
+        {
+            itemGridUIController.OnBuyButtonClicked();
         }
 
         private void OnGetItemsClicked()
