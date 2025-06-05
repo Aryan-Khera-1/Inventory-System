@@ -19,7 +19,7 @@ public class ItemSlotUIView : MonoBehaviour, IUIView
     {
         var image = iconButton.image;
 
-        if (icon != null)
+        if (icon != null && quantity > 0)
         {
             image.sprite = icon;
             image.color = new Color(1, 1, 1, 1f);

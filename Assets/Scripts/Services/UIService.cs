@@ -1,4 +1,5 @@
 using Resources.Items;
+using Resources.Runtime_Data;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -47,7 +48,7 @@ namespace Game.UI
             itemGridUIController.OnGetItemClicked();
         }
 
-        private void ShowItemGridUI(GridItemSO itemData, string title)
+        private void ShowItemGridUI(RuntimeGridData itemData, string title)
         {
             itemGridUIController.SetData(itemData);
             itemGridUIView.SetTitle(title);

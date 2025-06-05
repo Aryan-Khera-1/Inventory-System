@@ -1,10 +1,11 @@
 
 using Resources.Items;
+using Resources.Runtime_Data;
 
 public class EventService
 {
-    public EventController<GridItemSO, string> OnInventoryButtonClicked { get; private set; }
-    public EventController<GridItemSO, string> OnShopButtonClicked{get; private set;}
+    public EventController<RuntimeGridData, string> OnInventoryButtonClicked { get; private set; }
+    public EventController<RuntimeGridData, string> OnShopButtonClicked{get; private set;}
     public EventController<ItemSO, int> OnItemClicked { get; private set; } 
 
     public EventController<ItemCategory> OnCategoryChanged {get; private set;}
@@ -16,8 +17,8 @@ public class EventService
 
     public EventService()
     {
-        OnInventoryButtonClicked = new EventController<GridItemSO, string>();
-        OnShopButtonClicked = new EventController<GridItemSO, string>();
+        OnInventoryButtonClicked = new EventController<RuntimeGridData, string>();
+        OnShopButtonClicked = new EventController<RuntimeGridData, string>();
         OnItemClicked = new EventController<ItemSO, int>();
         OnCategoryChanged = new EventController<ItemCategory>();
         OnBuyButtonClicked = new EventController();

@@ -1,11 +1,17 @@
+using Resources.Runtime_Data;
 using UnityEngine;
  
 namespace Game.UI
 {
     public class GameplayService
     {
-        public GridItemSO ShopSo { get; set; }
-        public GridItemSO InventorySo { get; set; }
+        [Header("Configs")]
+        public GridItemSO ShopSo;
+        public GridItemSO InventorySo;
+        
+        [field: Header("Runtime Data")]
+        public RuntimeGridData ShopData { get; private set; }
+        public RuntimeGridData InventoryData { get; private set; }
         
         public GameplayService()
         {
@@ -16,6 +22,9 @@ namespace Game.UI
         {
             ShopSo = UnityEngine.Resources.Load<GridItemSO>("Shop/ShopSO");
             InventorySo = UnityEngine.Resources.Load<GridItemSO>("Inventory/InventorySO");
+            
+            ShopData = new RuntimeGridData(ShopSo);
+            InventoryData = new RuntimeGridData(InventorySo);
 
             if (ShopSo == null)
                 Debug.LogError("ShopSO not found in Shop/ShopSO");

@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using Game.UI;
 using Resources.Items;
+using Resources.Runtime_Data;
 using UnityEngine;
 
 public class ItemGridUIController
 {
-    private GridItemSO currentItemData;
+    private RuntimeGridData currentItemData;
     private readonly ItemGridUIView itemGridUIView;
     private readonly EventService eventService;
     private readonly GameplayService gameplayService;
@@ -33,7 +34,7 @@ public class ItemGridUIController
         }
     }
 
-    public void SetData(GridItemSO gridData)
+    public void SetData(RuntimeGridData gridData)
     {
         currentItemData = gridData;
         ResetItems(gridData.items);
@@ -42,7 +43,7 @@ public class ItemGridUIController
     public void OnCategoryDropdownValueChanged(int selectedIndex)
     {
         var selectedCategory = (ItemCategory)selectedIndex;
-        var filteredItems = new List<GridItemData>();
+        var filteredItems = new List<RuntimeItemData>();
 
         foreach (var itemData in currentItemData.items)
         {
@@ -55,7 +56,7 @@ public class ItemGridUIController
         ResetItems(filteredItems);
     }
     
-    public void AddItem(GridItemData newItem)
+    public void AddItem(RuntimeItemData newItem)
     {
         var existingItem = currentItemData.items.Find(x => x.itemSO == newItem.itemSO);
         if (existingItem != null)
@@ -97,7 +98,7 @@ public class ItemGridUIController
     }
 
 
-    public void ResetItems(List<GridItemData> items)
+    public void ResetItems(List<RuntimeItemData> items)
     {
         for (int i = 0; i < itemSlotControllers.Count; i++)
         {
@@ -115,8 +116,8 @@ public class ItemGridUIController
     
     public void OnGetItemClicked()
     {
-        var shopItems = gameplayService.ShopSo.items;
-        var inventoryItems = gameplayService.InventorySo.items;
+        var shopItems = gameplayService.ShopData.items;
+        var inventoryItems = gameplayService.InventoryData.items;
 
         if (shopItems.Count == 0)
         {
@@ -145,24 +146,16 @@ public class ItemGridUIController
             // Deduct from shop
             shopItem.quantity -= quantity;
 
-            // Add to inventory
-            var existingInventoryItem = inventoryItems.Find(x => x.itemSO == shopItem.itemSO);
-            if (existingInventoryItem != null)
-            {
-                existingInventoryItem.quantity += quantity;
-            }
-            else
-            {
-                inventoryItems.Add(new GridItemData
+           AddItem(shopItem);
+                /*inventoryItems.Add(new RuntimeItemData()
                 {
                     itemSO = shopItem.itemSO,
                     quantity = quantity
-                });
-            }
+                });*/
         }
 
         // Refresh the inventory view
-        SetData(gameplayService.InventorySo);
+        SetData(gameplayService.InventoryData);
         Debug.Log("3 random items picked from shop and added to inventory.");
     }
     

@@ -1,19 +1,20 @@
 using Game.UI;
+using Resources.Runtime_Data;
 
 public class MainUIController
 {
     private MainUIView mainUIView;
     private EventService eventService;
     private GameplayService gameplayService;
-    private GridItemSO inventoryItemData;
-    private GridItemSO shopItemData;
+    private RuntimeGridData inventoryItemData;
+    private RuntimeGridData shopItemData;
     
     public MainUIController(MainUIView mainUIView, EventService eventService, GameplayService gameplayService)
     {
         this.mainUIView = mainUIView;
         this.eventService = eventService;
-        inventoryItemData = gameplayService.InventorySo;
-        shopItemData = gameplayService.ShopSo;
+        inventoryItemData = gameplayService.InventoryData;
+        shopItemData = gameplayService.ShopData;
 
         SubscribeToEvents();
     }
