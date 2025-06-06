@@ -23,7 +23,7 @@ public class GameService : GenericMonoSingleton<GameService>
         // Instantiate Non-Mono services
         EventService = new EventService();
         SoundService = new SoundService();
-        GameplayService = new GameplayService();
+        GameplayService = new GameplayService(EventService);
         
         UIService.Initialize(EventService, GameplayService);
     }

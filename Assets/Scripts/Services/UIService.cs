@@ -29,7 +29,7 @@ namespace Game.UI
             this.gameplayService = gameplayService;
             
             mainController = new MainUIController(mainUIView, eventService, gameplayService);
-            itemGridUIController = new ItemGridUIController(itemGridUIView, gameplayService, eventService);
+            itemGridUIController = new ItemGridUIController(itemGridUIView, gameplayService, eventService, this);
             descriptionController = new DescriptionUIController(descriptionUIView);
             
             SubscribeToEvents();
@@ -45,14 +45,14 @@ namespace Game.UI
             eventService.OnSellButtonClicked.AddListener(OnSellButtonClicked);
         }
 
-        private void OnSellButtonClicked()
+        private void OnSellButtonClicked(ItemSO selectedItem, int quantity)
         {
-            itemGridUIController.OnSellButtonClicked();
+            itemGridUIController.OnSellButtonClicked(selectedItem, quantity);
         }
 
-        private void OnBuyButtonClicked()
+        private void OnBuyButtonClicked(ItemSO selectedItem, int quantity)
         {
-            itemGridUIController.OnBuyButtonClicked();
+            itemGridUIController.OnBuyButtonClicked(selectedItem, quantity);
         }
 
         private void OnGetItemsClicked()
@@ -74,5 +74,10 @@ namespace Game.UI
             descriptionController.SetItemData(item, quantityAvailable);
             descriptionController.Show();
         }
+        
+        public ItemSO SelectedItem => descriptionController.CurrentItem;
+        public int SelectedQuantity => descriptionController.SelectedQuantity;
+        public bool IsItemSelected => descriptionController.IsActive;
+
     }
 }

@@ -7,11 +7,13 @@ namespace Game.UI
         private DescriptionUIView descriptionUIView;
         private ItemSO currentItem;
         private int selectedQuantity = 1;
+        
         public int SelectedQuantity => selectedQuantity;
-        
         public ItemSO CurrentItem => currentItem;
-        
-        
+        public bool IsActive => descriptionUIView.IsActive;
+
+
+
         public DescriptionUIController(DescriptionUIView descriptionUIView)
         {
             this.descriptionUIView = descriptionUIView;
@@ -22,7 +24,6 @@ namespace Game.UI
         {
             selectedQuantity = Mathf.RoundToInt(newValue);
             descriptionUIView.QuantityValueToSet.text = selectedQuantity.ToString();
-
             UpdateCostAndWeight(selectedQuantity);
         }
         

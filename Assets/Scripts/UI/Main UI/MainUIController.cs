@@ -13,9 +13,12 @@ public class MainUIController
     {
         this.mainUIView = mainUIView;
         this.eventService = eventService;
+        this.gameplayService = gameplayService;
+        
         inventoryItemData = gameplayService.InventoryData;
         shopItemData = gameplayService.ShopData;
-
+        
+        UpdateCurrencyAndWeight();
         SubscribeToEvents();
     }
 
@@ -23,6 +26,18 @@ public class MainUIController
     {
         mainUIView.InventoryButton.onClick.AddListener(() => eventService.OnInventoryButtonClicked.InvokeEvent(inventoryItemData, "Inventory"));
         mainUIView.ShopButton.onClick.AddListener(() => eventService.OnShopButtonClicked.InvokeEvent(shopItemData, "Shop"));
+        eventService.OnStatsChanged.AddListener(UpdateCurrencyAndWeight);
+    }
+    
+    private void UpdateCurrencyAndWeight()
+    {
+        var currentCurrency = gameplayService.CurrentCurrency;
+        var maxCurrency = gameplayService.MaxCurrency;
+        var currentWeight = gameplayService.GetCurrentInventoryWeight();
+        var maxWeight = gameplayService.MaxInventoryWeight;
+
+        mainUIView.CurrencyText.text = $"{currentCurrency}/{maxCurrency}";
+        mainUIView.WeightText.text = $"{currentWeight}/{maxWeight}";
     }
     
     public void Show() => mainUIView.EnableView();

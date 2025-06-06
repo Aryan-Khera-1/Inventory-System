@@ -5,6 +5,8 @@ namespace Game.UI
 {
     public class GameplayService
     {
+        private EventService eventService;
+        
         [Header("Configs")]
         public GridItemSO ShopSo;
         public GridItemSO InventorySo;
@@ -13,24 +15,16 @@ namespace Game.UI
         public RuntimeGridData ShopData { get; private set; }
         public RuntimeGridData InventoryData { get; private set; }
         
-        public int CurrentCurrency { get; set; } = 1000;
+        public int CurrentCurrency { get; set; } = 50;
+        public int MaxCurrency { get; set; } = 500;
         public int MaxInventoryWeight { get; private set; } = 500;
 
-        public int GetCurrentInventoryWeight()
+        public GameplayService(EventService eventService)
         {
-            int totalWeight = 0;
-            foreach (var item in InventoryData.items)
-            {
-                totalWeight += item.itemSO.weight * item.quantity;
-            }
-            return totalWeight;
-        }
-
-        public GameplayService()
-        {
+            this.eventService = eventService;
             Initialize();
         }
-
+        
         public void Initialize()
         {
             ShopSo = UnityEngine.Resources.Load<GridItemSO>("Shop/ShopSO");
@@ -43,6 +37,21 @@ namespace Game.UI
                 Debug.LogError("ShopSO not found in Shop/ShopSO");
             if (InventorySo == null)
                 Debug.LogError("InventorySO not found in Inventory/InventorySO");
+        }
+        
+        public void NotifyStatsChanged()
+        {
+            eventService.OnStatsChanged.InvokeEvent();
+        }
+        
+        public int GetCurrentInventoryWeight()
+        {
+            int totalWeight = 0;
+            foreach (var item in InventoryData.items)
+            {
+                totalWeight += item.itemSO.weight * item.quantity;
+            }
+            return totalWeight;
         }
     }
 }

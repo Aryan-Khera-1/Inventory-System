@@ -23,6 +23,8 @@ public class DescriptionUIView : MonoBehaviour, IUIView
     public Slider QuantitySlider => quantitySlider;
     public Image ItemIcon => itemIcon;
     
+    public bool IsActive => gameObject.activeSelf;
+
     public void EnableView() => gameObject.SetActive(true);
     public void DisableView() => gameObject.SetActive(false);
 }

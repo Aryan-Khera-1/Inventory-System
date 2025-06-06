@@ -10,6 +10,7 @@ public class ItemGridUIView : MonoBehaviour, IUIView
 {
     private ItemGridUIController itemGridUIController;
     private EventService eventService;
+    private UIService uiService;
     
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI titleText;
@@ -26,10 +27,11 @@ public class ItemGridUIView : MonoBehaviour, IUIView
     public Button GetItemButton => getItemButton;
     public Dropdown CategoriesDropdown => categoriesDropdown;
 
-    public void Initialize(ItemGridUIController controller, EventService eventService)
+    public void Initialize(ItemGridUIController controller, EventService eventService, UIService uiService)
     {
         this.itemGridUIController = controller;
         this.eventService = eventService;
+        this.uiService = uiService;
             
         categoriesDropdown.value = 0;
         categoriesDropdown.RefreshShownValue();
@@ -41,6 +43,8 @@ public class ItemGridUIView : MonoBehaviour, IUIView
     {
         categoriesDropdown.onValueChanged.AddListener(itemGridUIController.OnCategoryDropdownValueChanged);
         getItemButton.onClick.AddListener(OnGetItemButtonClicked);    
+        buyButton.onClick.AddListener(OnBuyButtonClicked);
+        sellButton.onClick.AddListener(OnSellButtonClicked);
     }
 
     public List<ItemSlotUIView> GetItemSlots()
@@ -82,6 +86,34 @@ public class ItemGridUIView : MonoBehaviour, IUIView
         eventService.OnGetItemsButtonClicked.InvokeEvent();
         getItemButton.interactable = false;
     }
+    private void OnBuyButtonClicked()
+    {
+        var item = uiService.SelectedItem;
+        var quantity = uiService.SelectedQuantity;
+
+        if (item == null)
+        {
+            Debug.LogWarning("No item selected for Buy.");
+            return;
+        }
+
+        eventService.OnBuyButtonClicked.InvokeEvent(item, quantity);
+    }
+
+    private void OnSellButtonClicked()
+    {
+        var item = uiService.SelectedItem;
+        var quantity = uiService.SelectedQuantity;
+
+        if (item == null)
+        {
+            Debug.LogWarning("No item selected for Sell.");
+            return;
+        }
+
+        eventService.OnSellButtonClicked.InvokeEvent(item, quantity);
+    }
+
     
     public void EnableView() => gameObject.SetActive(true);
     public void DisableView() => gameObject.SetActive(false);

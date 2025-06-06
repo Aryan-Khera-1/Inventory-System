@@ -10,15 +10,17 @@ public class ItemGridUIController
     private readonly ItemGridUIView itemGridUIView;
     private readonly EventService eventService;
     private readonly GameplayService gameplayService;
+    private readonly UIService uiService;
     private readonly List<ItemSlotUIController> itemSlotControllers;
     
-    public ItemGridUIController(ItemGridUIView itemGridUIView, GameplayService gameplayService, EventService eventService)
+    public ItemGridUIController(ItemGridUIView itemGridUIView, GameplayService gameplayService, EventService eventService, UIService uiService)
     {
         this.itemGridUIView = itemGridUIView;
         this.eventService = eventService;
         this.gameplayService = gameplayService;
+        this.uiService = uiService;
         
-        itemGridUIView.Initialize(this, eventService);
+        itemGridUIView.Initialize(this, eventService, uiService);
         itemSlotControllers = new List<ItemSlotUIController>();
         InitializeItemSlotControllers();
     }
@@ -102,15 +104,72 @@ public class ItemGridUIController
         Debug.Log("3 random items picked from shop and added to inventory.");
     }
     
-    public void OnBuyButtonClicked()
+    public void OnBuyButtonClicked(ItemSO selectedItem, int quantity)
     {
-        throw new System.NotImplementedException();
-    }
+        if (!uiService.IsItemSelected)
+        {
+            Debug.Log("No item selected.");
+            return;
+        }
+
+        if (!CanBuy(selectedItem, quantity))
+        {
+            Debug.Log("Not enough currency or inventory space.");
+            return;
+        }
+
+        PerformBuy(selectedItem, quantity);    }
     
-    public void OnSellButtonClicked()
+    public void OnSellButtonClicked(ItemSO selectedItem, int quantity)
     {
-        throw new System.NotImplementedException();
+        if (!uiService.IsItemSelected)
+        {
+            Debug.Log("No item selected.");
+            return;
+        }
+
+        if (!CanSell(selectedItem, quantity))
+        {
+            Debug.Log("Not enough item quantity in inventory.");
+            return;
+        }
+
+        PerformSell(selectedItem, quantity);
     }
+
+    private bool CanBuy(ItemSO item, int quantity)
+    {
+        int totalCost = item.cost * quantity;
+        int totalWeight = item.weight * quantity;
+
+        return gameplayService.CurrentCurrency >= totalCost &&
+               (gameplayService.GetCurrentInventoryWeight() + totalWeight) <= gameplayService.MaxInventoryWeight;
+    }
+
+    private void PerformBuy(ItemSO item, int quantity)
+    {
+        gameplayService.CurrentCurrency -= item.cost * quantity;
+        RemoveItem(gameplayService.ShopData.items, item, quantity);
+        AddItem(gameplayService.InventoryData.items, item, quantity);
+        SetData(gameplayService.ShopData);
+        gameplayService.NotifyStatsChanged();
+    }
+
+    private bool CanSell(ItemSO item, int quantity)
+    {
+        var existingItem = gameplayService.InventoryData.items.Find(x => x.itemSO == item);
+        return existingItem != null && existingItem.quantity >= quantity;
+    }
+
+    private void PerformSell(ItemSO item, int quantity)
+    {
+        gameplayService.CurrentCurrency += item.cost * quantity;
+        RemoveItem(gameplayService.InventoryData.items, item, quantity);
+        AddItem(gameplayService.ShopData.items, item, quantity);
+        SetData(gameplayService.InventoryData);
+        gameplayService.NotifyStatsChanged();
+    }
+
 
     private RuntimeItemData GetRandomAvailableItem(List<RuntimeItemData> items)
     {
