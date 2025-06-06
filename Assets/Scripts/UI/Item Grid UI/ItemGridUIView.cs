@@ -90,7 +90,7 @@ public class ItemGridUIView : MonoBehaviour, IUIView
     {
         var item = uiService.SelectedItem;
         var quantity = uiService.SelectedQuantity;
-
+        
         if (item == null)
         {
             Debug.LogWarning("No item selected for Buy.");

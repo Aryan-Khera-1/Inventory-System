@@ -30,7 +30,7 @@ namespace Game.UI
             
             mainController = new MainUIController(mainUIView, eventService, gameplayService);
             itemGridUIController = new ItemGridUIController(itemGridUIView, gameplayService, eventService, this);
-            descriptionController = new DescriptionUIController(descriptionUIView);
+            descriptionController = new DescriptionUIController(descriptionUIView, eventService);
             
             SubscribeToEvents();
         }

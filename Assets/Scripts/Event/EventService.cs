@@ -14,6 +14,7 @@ public class EventService
     public EventController<ItemSO, int> OnSellButtonClicked { get; private set; }
     public EventController OnGetItemsButtonClicked { get; private set; }
     public EventController OnStatsChanged { get; private set; }
+    public EventController<ItemSO, int> OnTransactionComplete { get; private set; }
 
 
     public EventService()
@@ -26,5 +27,6 @@ public class EventService
         OnSellButtonClicked = new EventController<ItemSO, int>();
         OnGetItemsButtonClicked = new EventController();
         OnStatsChanged = new EventController();
+        OnTransactionComplete = new EventController<ItemSO, int>();
     }
 }

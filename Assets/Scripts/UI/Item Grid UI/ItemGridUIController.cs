@@ -101,7 +101,7 @@ public class ItemGridUIController
         }
 
         SetData(gameplayService.InventoryData);
-        Debug.Log("3 random items picked from shop and added to inventory.");
+        gameplayService.NotifyStatsChanged();
     }
     
     public void OnBuyButtonClicked(ItemSO selectedItem, int quantity)
@@ -118,7 +118,11 @@ public class ItemGridUIController
             return;
         }
 
-        PerformBuy(selectedItem, quantity);    }
+        PerformBuy(selectedItem, quantity);    
+        
+        int updatedQuantity = GetItemQuantity(gameplayService.ShopData.items, selectedItem);
+        eventService.OnTransactionComplete.InvokeEvent(selectedItem, updatedQuantity);
+    }
     
     public void OnSellButtonClicked(ItemSO selectedItem, int quantity)
     {
@@ -135,6 +139,9 @@ public class ItemGridUIController
         }
 
         PerformSell(selectedItem, quantity);
+        
+        int updatedQuantity = GetItemQuantity(gameplayService.InventoryData.items, selectedItem);
+        eventService.OnTransactionComplete.InvokeEvent(selectedItem, updatedQuantity);
     }
 
     private bool CanBuy(ItemSO item, int quantity)
@@ -146,11 +153,11 @@ public class ItemGridUIController
                (gameplayService.GetCurrentInventoryWeight() + totalWeight) <= gameplayService.MaxInventoryWeight;
     }
 
-    private void PerformBuy(ItemSO item, int quantity)
+    private void PerformBuy(ItemSO item, int selectedQuantity)
     {
-        gameplayService.CurrentCurrency -= item.cost * quantity;
-        RemoveItem(gameplayService.ShopData.items, item, quantity);
-        AddItem(gameplayService.InventoryData.items, item, quantity);
+        gameplayService.CurrentCurrency -= item.cost * selectedQuantity;
+        RemoveItem(gameplayService.ShopData.items, item, selectedQuantity);
+        AddItem(gameplayService.InventoryData.items, item, selectedQuantity);
         SetData(gameplayService.ShopData);
         gameplayService.NotifyStatsChanged();
     }
@@ -161,16 +168,15 @@ public class ItemGridUIController
         return existingItem != null && existingItem.quantity >= quantity;
     }
 
-    private void PerformSell(ItemSO item, int quantity)
+    private void PerformSell(ItemSO item, int selectedQuantity)
     {
-        gameplayService.CurrentCurrency += item.cost * quantity;
-        RemoveItem(gameplayService.InventoryData.items, item, quantity);
-        AddItem(gameplayService.ShopData.items, item, quantity);
+        gameplayService.CurrentCurrency += item.cost * selectedQuantity;
+        RemoveItem(gameplayService.InventoryData.items, item, selectedQuantity);
+        AddItem(gameplayService.ShopData.items, item, selectedQuantity);
         SetData(gameplayService.InventoryData);
         gameplayService.NotifyStatsChanged();
     }
-
-
+    
     private RuntimeItemData GetRandomAvailableItem(List<RuntimeItemData> items)
     {
         var availableItems = items.FindAll(x => x.quantity > 0);
@@ -215,6 +221,12 @@ public class ItemGridUIController
                 sourceList.Remove(existingItem);
             }
         }
+    }
+    
+    private int GetItemQuantity(List<RuntimeItemData> dataList, ItemSO itemSO)
+    {
+        var existingItem = dataList.Find(x => x.itemSO == itemSO);
+        return existingItem != null ? existingItem.quantity : 0;
     }
     
     public void Show() => itemGridUIView.EnableView();
