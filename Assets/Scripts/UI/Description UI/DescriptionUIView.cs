@@ -25,6 +25,17 @@ public class DescriptionUIView : MonoBehaviour, IUIView
     
     public bool IsActive => gameObject.activeSelf;
 
+    public void SetTextColor(TMPro.TextMeshProUGUI textElement, bool isValid)
+    {
+        textElement.color = isValid ? Color.green : Color.red;
+    }
+    
+    public void ResetTextColor(TextMeshProUGUI text)
+    {
+        text.color = Color.green;
+    }
+
+
     public void EnableView() => gameObject.SetActive(true);
     public void DisableView() => gameObject.SetActive(false);
 }

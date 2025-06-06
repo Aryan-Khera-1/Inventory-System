@@ -16,8 +16,7 @@ namespace Game.UI
         public RuntimeGridData InventoryData { get; private set; }
         
         public int CurrentCurrency { get; set; } = 50;
-        public int MaxCurrency { get; set; } = 500;
-        public int MaxInventoryWeight { get; private set; } = 500;
+        public int MaxInventoryWeight { get; private set; } = 200;
 
         public GameplayService(EventService eventService)
         {

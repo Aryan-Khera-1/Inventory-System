@@ -30,7 +30,7 @@ namespace Game.UI
             
             mainController = new MainUIController(mainUIView, eventService, gameplayService);
             itemGridUIController = new ItemGridUIController(itemGridUIView, gameplayService, eventService, this);
-            descriptionController = new DescriptionUIController(descriptionUIView, eventService);
+            descriptionController = new DescriptionUIController(descriptionUIView, eventService, gameplayService);
             
             SubscribeToEvents();
         }
@@ -62,6 +62,7 @@ namespace Game.UI
 
         private void ShowItemGridUI(RuntimeGridData itemData, string title)
         {
+            SetDescriptionStatsColorStatus(title);
             descriptionController.Hide();
             itemGridUIController.SetData(itemData);
             itemGridUIView.SetTitle(title);
@@ -74,6 +75,8 @@ namespace Game.UI
             descriptionController.SetItemData(item, quantityAvailable);
             descriptionController.Show();
         }
+
+        private void SetDescriptionStatsColorStatus(string title) => descriptionController.SetColorizeDescriptionStats(title == "Shop");
         
         public ItemSO SelectedItem => descriptionController.CurrentItem;
         public int SelectedQuantity => descriptionController.SelectedQuantity;

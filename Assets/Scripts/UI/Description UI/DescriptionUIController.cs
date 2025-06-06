@@ -5,18 +5,23 @@ namespace Game.UI
     public class DescriptionUIController
     {
         private EventService eventService;
+        private GameplayService gameplayService;
         private DescriptionUIView descriptionUIView;
+        private bool colorizeDescriptionStats;
         private ItemSO currentItem;
         private int selectedQuantity = 1;
         
+        public void SetColorizeDescriptionStats(bool value) => colorizeDescriptionStats = value;
         public int SelectedQuantity => selectedQuantity;
         public ItemSO CurrentItem => currentItem;
         public bool IsActive => descriptionUIView.IsActive;
 
-        public DescriptionUIController(DescriptionUIView descriptionUIView, EventService eventService)
+        public DescriptionUIController(DescriptionUIView descriptionUIView, EventService eventService, GameplayService gameplayService)
         {
             this.descriptionUIView = descriptionUIView;
             this.eventService = eventService;
+            this.gameplayService = gameplayService;
+            
             descriptionUIView.QuantitySlider.onValueChanged.AddListener(OnQuantitySliderChanged);
             SubscribeToEvents();
         }
@@ -61,8 +66,25 @@ namespace Game.UI
 
             descriptionUIView.CurrencyRequired.text = totalCost.ToString();
             descriptionUIView.WeightRequired.text = totalWeight.ToString();
+            
+            HandleStatsColor(totalCost, totalWeight);
         }
-        
+
+        private void HandleStatsColor(int totalCost, int totalWeight)
+        {
+            int remainingWeightCapacity = gameplayService.MaxInventoryWeight - gameplayService.GetCurrentInventoryWeight();
+
+            if (colorizeDescriptionStats)
+            {
+                descriptionUIView.SetTextColor(descriptionUIView.CurrencyRequired, totalCost <= gameplayService.CurrentCurrency);
+                descriptionUIView.SetTextColor(descriptionUIView.WeightRequired, totalWeight <= remainingWeightCapacity);
+            }
+            else
+            {
+                descriptionUIView.ResetTextColor(descriptionUIView.CurrencyRequired);
+                descriptionUIView.ResetTextColor(descriptionUIView.WeightRequired);
+            }
+        }
         public void SetItemData(ItemSO item, int quantityAvailable)
         {
             currentItem = item;
@@ -71,11 +93,11 @@ namespace Game.UI
             descriptionUIView.DescriptionText.text = item.description;
             descriptionUIView.ItemIcon.sprite = item.icon;
 
-                descriptionUIView.QuantitySlider.minValue = 1;
-                descriptionUIView.QuantitySlider.maxValue = quantityAvailable;
-                descriptionUIView.QuantitySlider.value = 1;
-
-                UpdateCostAndWeight(1);
+            descriptionUIView.QuantitySlider.minValue = 1; 
+            descriptionUIView.QuantitySlider.maxValue = quantityAvailable; 
+            descriptionUIView.QuantitySlider.value = 1;
+            
+            UpdateCostAndWeight(1);
         }
 
         public void Show() => descriptionUIView.EnableView();

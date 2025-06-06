@@ -32,11 +32,10 @@ public class MainUIController
     private void UpdateCurrencyAndWeight()
     {
         var currentCurrency = gameplayService.CurrentCurrency;
-        var maxCurrency = gameplayService.MaxCurrency;
         var currentWeight = gameplayService.GetCurrentInventoryWeight();
         var maxWeight = gameplayService.MaxInventoryWeight;
 
-        mainUIView.CurrencyText.text = $"{currentCurrency}/{maxCurrency}";
+        mainUIView.CurrencyText.text = $"{currentCurrency}";
         mainUIView.WeightText.text = $"{currentWeight}/{maxWeight}";
     }
     
